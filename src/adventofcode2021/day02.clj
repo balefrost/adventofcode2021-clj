@@ -28,10 +28,10 @@
         [cmd dist] instr]
     (case cmd
       :forward (-> state
-                   (update :pos (partial + dist))
-                   (update :depth (partial + (* aim dist))))
-      :down (update state :aim (partial + dist))
-      :up (update state :aim #(- % dist)))))
+                   (update :pos + dist)
+                   (update :depth + (* aim dist)))
+      :down (update state :aim + dist)
+      :up (update state :aim - dist))))
 
 
 (defn part2 []

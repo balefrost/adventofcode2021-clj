@@ -9,7 +9,7 @@
 
 (defn part2 []
   (let [threes (partition 3 1 input)
-        sums (map (partial apply +) threes)]
+        sums (map (partial reduce + 0) threes)]
     (count (filter true? (map > (rest sums) sums)))))
 
 
