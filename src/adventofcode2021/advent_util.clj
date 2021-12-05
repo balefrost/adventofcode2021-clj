@@ -63,6 +63,14 @@
      (- n)
      n)))
 
+(defn sign
+  "Returns -1, 0, or 1 if the value is negative, zero, or positive"
+  ([n]
+   (cond
+     (< n 0) -1
+     (> n 0) 1
+     :else 0)))
+
 (defn trans-closure
   "Computes the transitive closure of the given function. The result includes
   all the elements in roots, as well as all the elements produced by calling
