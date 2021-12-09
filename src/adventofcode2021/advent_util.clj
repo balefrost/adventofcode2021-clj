@@ -99,8 +99,9 @@
      a
      (cons b more))))
 
-(defn iterate-until-stable [f x]
+(defn iterate-until-stable
   "Like iterate, but stops as soon as f produces output equal to its input."
+  [f x]
   (lazy-seq
     (let [n (f x)]
       (if (= n x)
@@ -111,3 +112,32 @@
   "Computes the least common multiple of the arguments."
   ([x y] (/ (abs-value (* x y)) (greatest-common-divisor x y)))
   ([x y & more] (reduce least-common-multiple x (cons y more))))
+
+(defn find-dims
+  "Returns the [h w] dimensions of the input data, which is assumed to be in row-major format"
+  [data-row-major]
+  [(count data-row-major) (count (first data-row-major))])
+
+(defn iterate-dims
+  "Iterates the [h w] dimensions of the input data, changing x faster than y"
+  [dims]
+  (let [[h w] dims]
+    (for [y (range h)
+          x (range w)]
+      [y x])))
+
+(defn adjacent-locs
+  "Finds the locations adjacent to [y x] within the bounds [0 0] and [h w]"
+  [[y x] [h w]]
+  (let [candidates [[y (dec x)]
+                    [y (inc x)]
+                    [(dec y) x]
+                    [(inc y) x]]]
+    (filter
+      (fn [[y x]]
+        (and
+          (>= x 0)
+          (< x w)
+          (>= y 0)
+          (< y h)))
+      candidates)))
