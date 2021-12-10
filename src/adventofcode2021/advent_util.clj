@@ -113,6 +113,17 @@
   ([x y] (/ (abs-value (* x y)) (greatest-common-divisor x y)))
   ([x y & more] (reduce least-common-multiple x (cons y more))))
 
+(defn median
+  "Finds the median of the collection"
+  ([s]
+   (let [sorted (into [] (sort s))
+         mid-idx (quot (count s) 2)
+         even-size (= 0 (mod (count s) 2))]
+     (cond
+       (empty? sorted) nil
+       even-size (/ (+ (nth sorted mid-idx) (nth sorted (dec mid-idx))) 2)
+       :else (nth sorted mid-idx)))))
+
 (defn find-dims
   "Returns the [h w] dimensions of the input data, which is assumed to be in row-major format"
   [data-row-major]

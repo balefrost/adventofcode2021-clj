@@ -5,11 +5,6 @@
 (def input (map parse-int (str/split (read-input) #"[,\s]+")))
 ;(def input (map parse-int (str/split "16,1,2,0,4,2,7,1,2,14" #"[,\s]+")))
 
-(defn median [s]
-  (let [sorted (into [] (sort s))
-        mid-idx (quot (count s) 2)]
-    (nth sorted mid-idx)))
-
 (defn part1 []
   (let [med (median input)]
     (reduce + (map (fn [i] (abs-value (- i med))) input))))
