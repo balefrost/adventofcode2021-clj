@@ -12,8 +12,8 @@
 ;(def input (process-input "2199943210\n3987894921\n9856789892\n8767896789\n9899965678"))
 
 (defn find-low-points [in]
-  (let [dims (find-dims in)]
-    (for [pos (iterate-dims dims)
+  (let [dims (grid-dims in)]
+    (for [pos (dims-iterate dims)
           :let [my-height (get-in in pos)
                 adjacent-heights (map #(get-in in %) (adjacent-locs pos dims))
                 bad-adjacent (filter #(<= % my-height) adjacent-heights)
@@ -30,7 +30,7 @@
             my-risk)))
 
 (defn step-basins [basins]
-  (let [dims (find-dims input)]
+  (let [dims (grid-dims input)]
     (for [basin basins
           :let [more-posns (sort (mapcat #(adjacent-locs % dims) basin))
                 valid-posns (filter #(< (get-in input %) 9) more-posns)]]

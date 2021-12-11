@@ -124,12 +124,12 @@
        even-size (/ (+ (nth sorted mid-idx) (nth sorted (dec mid-idx))) 2)
        :else (nth sorted mid-idx)))))
 
-(defn find-dims
+(defn grid-dims
   "Returns the [h w] dimensions of the input data, which is assumed to be in row-major format"
   [data-row-major]
   [(count data-row-major) (count (first data-row-major))])
 
-(defn iterate-dims
+(defn dims-iterate
   "Iterates the [h w] dimensions of the input data, changing x faster than y"
   [dims]
   (let [[h w] dims]
