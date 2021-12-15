@@ -15,7 +15,7 @@
   (let [dims (grid-dims in)]
     (for [pos (dims-iterate dims)
           :let [my-height (get-in in pos)
-                adjacent-heights (map #(get-in in %) (adjacent-locs pos dims))
+                adjacent-heights (map #(get-in in %) (grid-adjacent4 dims pos))
                 bad-adjacent (filter #(<= % my-height) adjacent-heights)
                 pos (if (zero? (count bad-adjacent))
                       pos)]
@@ -32,7 +32,7 @@
 (defn step-basins [basins]
   (let [dims (grid-dims input)]
     (for [basin basins
-          :let [more-posns (sort (mapcat #(adjacent-locs % dims) basin))
+          :let [more-posns (sort (mapcat #(grid-adjacent4 dims %) basin))
                 valid-posns (filter #(< (get-in input %) 9) more-posns)]]
 
       (into #{} (concat basin valid-posns)))))

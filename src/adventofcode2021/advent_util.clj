@@ -108,6 +108,15 @@
         [x]
         (cons x (iterate-until-stable f n))))))
 
+(defn iterate-until-nil
+  "Like iterate, but stops as soon as f produces nil."
+  [f x]
+  (lazy-seq
+    (let [n (f x)]
+      (if (nil? n)
+        [x]
+        (cons x (iterate-until-nil f n))))))
+
 (defn least-common-multiple
   "Computes the least common multiple of the arguments."
   ([x y] (/ (abs-value (* x y)) (greatest-common-divisor x y)))
@@ -137,9 +146,9 @@
           x (range w)]
       [y x])))
 
-(defn adjacent-locs
+(defn grid-adjacent4
   "Finds the locations adjacent to [y x] within the bounds [0 0] and [h w]"
-  [[y x] [h w]]
+  [[h w] [y x]]
   (let [candidates [[y (dec x)]
                     [y (inc x)]
                     [(dec y) x]
@@ -152,3 +161,11 @@
           (>= y 0)
           (< y h)))
       candidates)))
+
+(defn grid-coords
+  "Iterates all locations within grid"
+  [grid]
+  (for [y (range (count grid))
+        :let [row (nth grid y)]
+        x (range (count row))]
+    [y x]))

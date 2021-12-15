@@ -14,12 +14,6 @@
       (mapv f row))
     grid))
 
-(defn grid-coords [grid]
-  (for [y (range (count grid))
-        :let [row (nth grid y)]
-        x (range (count row))]
-    [y x]))
-
 (defn grid-filter-coords [f grid]
   (filter
     (fn [coord]
