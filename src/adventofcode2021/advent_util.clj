@@ -169,3 +169,25 @@
         :let [row (nth grid y)]
         x (range (count row))]
     [y x]))
+
+(defn binary-search
+  "Performs a binary search for elem in v. If elem is found, returns the index at which it was found. Otherwise, returns
+  the bit inverse of the insertion index."
+  [v elem]
+  (assert (indexed? v) "v must be Indexed")
+  (loop [low 0
+         high (count v)]
+    (if (= low high)
+      (bit-not low)
+      (let [mid (quot (+ low high) 2)]
+        (case (sign (compare elem (get v mid)))
+          0 mid
+          -1 (recur low mid)
+          1 (recur (inc mid) high))))))
+
+(defn tails
+  "Finds the successive tails of s: s, (rest s), (rest (rest s)), etc."
+  [s]
+  (lazy-seq
+    (if-let [s (seq s)]
+      (cons s (tails (rest s))))))
